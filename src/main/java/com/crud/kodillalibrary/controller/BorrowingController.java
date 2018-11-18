@@ -20,24 +20,24 @@ public class BorrowingController {
     @Autowired
     private BorrowingMapper borrowingMapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBorrowings")
+    @GetMapping
     public List<BorrowingDto> getBorrowings() {
         return borrowingMapper.mapToBorrowingDtoList(dbService.getAllBorrowings());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBorrowingById")
-    public BorrowingDto getBorrowingById(@RequestParam Long id) throws BorrowingNotFoundException {
+    @GetMapping(value = "{id}")
+    public BorrowingDto getBorrowingById(@PathVariable Long id) throws BorrowingNotFoundException {
         return borrowingMapper.mapToBorrowingDto(dbService.getBorrowingById(id)
                 .orElseThrow(() -> new BorrowingNotFoundException("Borrowing with id " + id + " doesn't exist")));
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBorrowing")
-    public void deleteBorrowing(@RequestParam Long id) {
+    @DeleteMapping(value = "deleteBorrowing/{id}")
+    public void deleteBorrowing(@PathVariable Long id) {
         dbService.deleteBorrowing(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateBorrowingData")
+    @PutMapping(value = "updateBorrowingData")
     public BorrowingDto updateBorrowingData(@RequestBody BorrowingDto borrowingDto) {
         return borrowingMapper.mapToBorrowingDto(dbService.saveBorrowing(borrowingMapper.mapToBorrowing(borrowingDto)));
     }

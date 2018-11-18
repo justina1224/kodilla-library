@@ -1,4 +1,4 @@
-package com.crud.kodillalibrary.bookTitleDao;
+package com.crud.kodillalibrary.dao;
 
 import com.crud.kodillalibrary.domain.BookTitle;
 import com.crud.kodillalibrary.repository.BookTitleRepository;

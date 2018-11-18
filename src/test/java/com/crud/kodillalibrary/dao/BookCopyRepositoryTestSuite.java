@@ -1,4 +1,4 @@
-package com.crud.kodillalibrary.bookCopyDao;
+package com.crud.kodillalibrary.dao;
 
 import com.crud.kodillalibrary.domain.BookCopy;
 import com.crud.kodillalibrary.domain.BookStatus;

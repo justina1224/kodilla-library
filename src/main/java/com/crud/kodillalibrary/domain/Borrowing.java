@@ -1,11 +1,6 @@
 package com.crud.kodillalibrary.domain;
 
-import com.crud.kodillalibrary.converter.LocalDatePersistenceConverter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,27 +20,19 @@ public final class Borrowing {
     private Long id;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "reader")
     @JoinColumn(name = "reader_id")
     private LibraryReader reader;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "bookCopy")
     @JoinColumn(name = "copy_id")
     private BookCopy bookCopy;
 
     @Column(name = "borrowing_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = ToStringSerializer.class)
-    @Convert(converter = LocalDatePersistenceConverter.class)
     private LocalDate borrowingDate;
 
     @Column(name = "return_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = ToStringSerializer.class)
-    @Convert(converter = LocalDatePersistenceConverter.class)
     private LocalDate returnDate;
 
 

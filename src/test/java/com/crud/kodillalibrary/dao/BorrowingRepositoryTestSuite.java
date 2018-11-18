@@ -1,4 +1,4 @@
-package com.crud.kodillalibrary.borrowingDao;
+package com.crud.kodillalibrary.dao;
 
 import com.crud.kodillalibrary.domain.*;
 import com.crud.kodillalibrary.repository.BookCopyRepository;

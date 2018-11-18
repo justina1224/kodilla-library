@@ -22,18 +22,18 @@ public class BookCopyController {
     @Autowired
     private BookCopyMapper bookCopyMapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookCopies")
+    @GetMapping
     public List<BookCopyDto> getBookCopies() {
         return bookCopyMapper.mapToBookCopyDtoList(dbService.getAllBookCopies());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookCopyById")
-    public BookCopyDto getBookCopyById(@RequestParam Long id) throws BookCopyNotFoundException {
+    @GetMapping(value = "{id}")
+    public BookCopyDto getBookCopyById(@PathVariable Long id) throws BookCopyNotFoundException {
         return bookCopyMapper.mapToBookCopyDto(dbService.getBookCopyById(id)
                 .orElseThrow(() -> new BookCopyNotFoundException("Book copy with id " + id + " doesn't exist")));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookCopyByStatus/{bookStatus}")
+    @GetMapping(value = "getBookCopyByStatus/{bookStatus}")
     public List<BookCopyDto> getBookCopyByStatus(@PathVariable String bookStatus) {
         List<BookCopy> copies = dbService.getAllBookCopies().stream()
                 .filter(c -> c.getBookStatus().getStatus().equalsIgnoreCase(bookStatus))
@@ -42,8 +42,8 @@ public class BookCopyController {
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBookCopy")
-    public void deleteBookCopy(@RequestParam Long id) {
+    @DeleteMapping(value = "deleteBookCopy/{id}")
+    public void deleteBookCopy(@PathVariable Long id) {
         dbService.deleteBookCopy(id);
     }
 
@@ -62,8 +62,8 @@ public class BookCopyController {
 
     }
 
-    @GetMapping(value = "/showAvailable")
-    public List<BookCopyDto> showAvailableCopies(@RequestParam Long titleId) throws BookTitleNotFoundException {
+    @GetMapping(value = "/showAvailable/{titleId}")
+    public List<BookCopyDto> showAvailableCopies(@PathVariable Long titleId) throws BookTitleNotFoundException {
         BookTitle bookTitle = dbService.getBookTitleById(titleId)
                 .orElseThrow(() -> new BookTitleNotFoundException("Book title with id " + titleId + " doesn't exist"));
         List<BookCopy> copies = bookTitle.getCopies().stream()
@@ -72,8 +72,8 @@ public class BookCopyController {
         return bookCopyMapper.mapToBookCopyDtoList(copies);
     }
 
-    @PostMapping(value = "/createBookCopyByTitle")
-    public void createBookCopy(@RequestParam Long id) throws BookTitleNotFoundException{
+    @PostMapping(value = "/createBookCopyByTitle/{id}")
+    public void createBookCopy(@PathVariable Long id) throws BookTitleNotFoundException{
         BookTitle bookTitle = dbService.getBookTitleById(id)
                 .orElseThrow(() -> new BookTitleNotFoundException("Book title with id " + id + " doesn't exist"));
         dbService.saveBookCopy(bookCopyMapper.mapToBookCopyByTitle(bookTitle));

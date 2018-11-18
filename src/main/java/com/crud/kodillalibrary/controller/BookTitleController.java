@@ -20,25 +20,25 @@ public class BookTitleController {
     @Autowired
     private BookTitleMapper bookTitleMapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookTitles")
+    @GetMapping
     public List<BookTitleDto> getBookTitles() {
         return bookTitleMapper.mapToBookTitleDtoList(dbService.getAllBookTitles());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookTitleById")
-    public BookTitleDto getBookTitleById(@RequestParam Long id) throws BookTitleNotFoundException {
+    @GetMapping(value = "{id}")
+    public BookTitleDto getBookTitleById(@PathVariable Long id) throws BookTitleNotFoundException {
         return bookTitleMapper.mapToBookTitleDto(dbService.getBookTitleById(id)
                 .orElseThrow(() -> new BookTitleNotFoundException("Book title with id " + id + " doesn't exist")));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookTitleByTitle")
-    public List<BookTitleDto> getBookTitleByTitle(@RequestParam String title) {
+    @GetMapping(value = "getBookTitleByTitle/{title}")
+    public List<BookTitleDto> getBookTitleByTitle(@PathVariable String title) {
         return bookTitleMapper.mapToBookTitleDtoList(dbService.getBookTitleByTitle(title));
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.DELETE, value = "deleteBookTitle")
-    public void deleteBookTitle(@RequestParam Long id) {
+    @DeleteMapping(value = "deleteBookTitle/{id}")
+    public void deleteBookTitle(@PathVariable Long id) {
         dbService.deleteBookTitle(id);
     }
 

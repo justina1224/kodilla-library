@@ -1,4 +1,4 @@
-package com.crud.kodillalibrary.readerDao;
+package com.crud.kodillalibrary.dao;
 
 import com.crud.kodillalibrary.domain.LibraryReader;
 import com.crud.kodillalibrary.repository.ReaderRepository;

@@ -36,7 +36,7 @@ public class BookCopy {
     @Enumerated(EnumType.STRING)
     private BookStatus bookStatus;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "bookCopy")
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
