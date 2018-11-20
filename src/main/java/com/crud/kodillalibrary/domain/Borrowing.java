@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "BORROWING_BOOKS")
 @Access(AccessType.FIELD)
+@EqualsAndHashCode
 public final class Borrowing {
 
     @Id

@@ -1,6 +1,6 @@
 package com.crud.kodillalibrary.domain;
 
-import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class BookCopyDto {
     private Long id;
     private BookTitleDto bookTitleDto;

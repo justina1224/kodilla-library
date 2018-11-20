@@ -37,7 +37,7 @@ public class BorrowingController {
         dbService.deleteBorrowing(id);
     }
 
-    @PutMapping(value = "updateBorrowingData")
+    @PutMapping(value = "/updateBorrowingData")
     public BorrowingDto updateBorrowingData(@RequestBody BorrowingDto borrowingDto) {
         return borrowingMapper.mapToBorrowingDto(dbService.saveBorrowing(borrowingMapper.mapToBorrowing(borrowingDto)));
     }

@@ -1,7 +1,6 @@
 package com.crud.kodillalibrary.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,7 @@ public class BookTitle {
     @Column(name = "issue_date")
     private int issueDate;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(
             targetEntity = BookCopy.class,
             mappedBy = "bookTitle",

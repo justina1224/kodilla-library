@@ -4,9 +4,11 @@ import com.crud.kodillalibrary.KodillaLibraryApplication;
 import com.crud.kodillalibrary.controller.exception.ReaderNotFoundException;
 import com.crud.kodillalibrary.domain.LibraryReader;
 import com.crud.kodillalibrary.domain.LibraryReaderDto;
+import com.crud.kodillalibrary.jsonformatting.LocalDateAdapter;
 import com.crud.kodillalibrary.mapper.ReaderMapper;
 import com.crud.kodillalibrary.service.DbService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -35,7 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {KodillaLibraryApplication.class, RestTemplateFactory.class})
 @WebMvcTest(ReaderController.class)
-
 public class ReaderControllerTestSuite {
 
     @Autowired
@@ -144,7 +145,10 @@ public class ReaderControllerTestSuite {
         LibraryReader reader = new LibraryReader(1L, "Jan", "Kowalski", LocalDate.now());
         LibraryReaderDto readerDto = new LibraryReaderDto(1L, "Jan", "Kowalski", LocalDate.now());
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
         String jsonContent = gson.toJson(readerDto);
 
         when(readerMapper.mapToReader(any())).thenReturn(reader);
@@ -161,7 +165,6 @@ public class ReaderControllerTestSuite {
                 .andExpect(jsonPath("$.firstName", is("Jan")))
                 .andExpect(jsonPath("$.lastName", is("Kowalski")))
                 .andExpect(jsonPath("$.creatingAccountDate", is(LocalDate.now().format(FORMATTER))));
-
     }
 
     @Test
@@ -170,7 +173,10 @@ public class ReaderControllerTestSuite {
         LibraryReader reader = new LibraryReader(1L, "Jan", "Kowalski", LocalDate.now());
         LibraryReaderDto readerDto = new LibraryReaderDto(1L, "Jan", "Kowalski", LocalDate.now());
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
         String jsonContent = gson.toJson(readerDto);
 
         when(readerMapper.mapToReader(readerDto)).thenReturn(reader);

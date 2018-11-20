@@ -58,7 +58,8 @@ public class BookTitleControllerTestSuite {
         when(dbService.getAllBookTitles()).thenReturn(titles);
 
         //When & Then
-        mockMvc.perform(get("/v1/book/title").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/book/title")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -77,7 +78,8 @@ public class BookTitleControllerTestSuite {
         when(dbService.getAllBookTitles()).thenReturn(titles);
 
         //When & Then
-        mockMvc.perform(get("/v1/book/title").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/book/title")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
